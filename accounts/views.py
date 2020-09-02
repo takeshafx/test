@@ -27,8 +27,8 @@ def home(request):
 def customerList(request):
 	customers = Customer.objects.all()
 
-	context = {'customers':customers, }
-	return render(request, 'customerList.html',context)
+	contex = {'customers':customers, }
+	return render(request, 'customerList.html',contex)
 
 def login(request):
 	return render(request, 'login.html')
