@@ -55,8 +55,8 @@ def logoutUser(request):
 
 @login_required(login_url='log')
 def home(request):
-	customers = Customer.objects.all()
-	orders = Order.objects.all()
+	customers = Customer.objects.filter(user=request.user)
+	orders = Order.objects.filter(user=request.user)
 	
 	total_customers = customers.count()
 	total_orders = orders.count()
@@ -72,14 +72,14 @@ def home(request):
 
 @login_required(login_url='log')
 def customerList(request):
-	customers = Customer.objects.all()
+	customers = Customer.objects.filter(user=request.user)
 	#customers = Customer.objects.filter(user=request.user)
 	contex = {'customers':customers, }
 	return render(request, 'customerList.html',contex)
 
 @login_required(login_url='log')
 def meals(request):
-	meals = Meal.objects.all()
+	meals = Meal.objects.filter(user=request.user)
 	return render(request, 'meals.html', {'meals':meals})
 
 @login_required(login_url='log')

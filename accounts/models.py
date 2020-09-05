@@ -1,6 +1,7 @@
 from django.db import models
 import datetime
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 class Customer(models.Model):
@@ -9,7 +10,7 @@ class Customer(models.Model):
 		email = models.CharField(max_length=200, null=True)
 		Address = models.CharField(max_length=200, null=True)
 		date_created = models.DateTimeField(auto_now_add=True, null=True)
-		#user = models.ForeignKey(User,on_delete=models.DO_NOTHING,default=2)
+		user = models.ForeignKey(User,on_delete=models.CASCADE)
 
 
 		def __str__(self):            
@@ -37,6 +38,7 @@ class Meal(models.Model):
 		
 		description = models.CharField(max_length=200, null=True)
 		tags = models.ManyToManyField(Tag)
+		user = models.ForeignKey(User,on_delete=models.CASCADE)
 	
 		def __str__(self):            
 			return self.name     
@@ -52,4 +54,4 @@ class Order(models.Model):
 		meal = models.ForeignKey(Meal, null=True, on_delete= models.SET_NULL)
 		date_created = models.DateTimeField(auto_now_add=True, null=True)
 		status = models.CharField(max_length=200, null=True, choices=STATUS)
- 
+		user = models.ForeignKey(User,on_delete=models.CASCADE)
