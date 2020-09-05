@@ -29,10 +29,10 @@ class Meal(models.Model):
 		tags = models.ManyToManyField(Tag)
 		user = models.ForeignKey(User,on_delete=models.CASCADE)
 	
-		def __str__(self):            
-			return self.meal_name     
-
-class Order(models.Model):
+		def __str__(self):                                      
+			return self.meal_name                                
+                                                   
+class Order(models.Model):                                
 		STATUS = (
 				('Pending', 'Pending'),
 				('Out for delivery', 'Out for delivery'),
