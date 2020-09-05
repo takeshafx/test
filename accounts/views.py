@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 from .models import *
 from .forms import OrderForm
+from .forms import MealForm
 from .forms import CustomerForm,CreateUserForm
 
 from django.contrib.auth.forms import UserCreationForm
@@ -81,6 +82,17 @@ def customerList(request):
 def meals(request):
 	meals = Meal.objects.filter(user=request.user)
 	return render(request, 'meals.html', {'meals':meals})
+
+@login_required(login_url='log')
+def addMeal(request):
+	meal_form = MealForm()
+	if request.method == 'POST':
+		meal_form = MealForm(request.POST)
+		if meal_form.is_valid():
+			meal_form.save()
+		return redirect('/')
+	context = {'add_new_meal_form':meal_form}
+	return render(request, 'addMeals.html', context)
 
 @login_required(login_url='log')
 def customer(request, pk_test):

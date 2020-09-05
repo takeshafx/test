@@ -1,5 +1,5 @@
 from django.db import models
-import datetime
+from datetime import datetime, timedelta
 from django.utils import timezone
 from django.contrib.auth.models import User
 
@@ -9,7 +9,6 @@ class Customer(models.Model):
 		contact_number = models.CharField(max_length=200, null=True)
 		email = models.CharField(max_length=200, null=True)
 		Address = models.CharField(max_length=200, null=True)
-		date_created = models.DateTimeField(auto_now_add=True, null=True)
 		user = models.ForeignKey(User,on_delete=models.CASCADE)
 
 
@@ -24,24 +23,14 @@ class Tag(models.Model):
 			
 
 class Meal(models.Model):
-		NAME = (
-				('Fried Rice', 'Fried Rice'),
-				('Kottu', 'Kottu'),
-				('Pizza', 'Pizza'),
-				('Hoppers', 'Hoppers'), 
-				('Shorties', 'Shorties'),
-				('Rice&Curry', 'Rice&Curry'),
-				
-				) 
-		price = models.FloatField(null=True)
-		name = models.CharField(max_length=200, null=True, choices=NAME)
-		
+		meal_name=models.CharField(max_length=200, null=True)
+		price = models.FloatField(null=True)		
 		description = models.CharField(max_length=200, null=True)
 		tags = models.ManyToManyField(Tag)
 		user = models.ForeignKey(User,on_delete=models.CASCADE)
 	
 		def __str__(self):            
-			return self.name     
+			return self.meal_name     
 
 class Order(models.Model):
 		STATUS = (
