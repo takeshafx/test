@@ -85,22 +85,18 @@ def meals(request):
 
 @login_required(login_url='log')
 def addMeal(request):
-	if request.method == 'GET':
-		meal_form = MealForm()
-		context = {'add_new_meal_form':meal_form}
-		return render(request, 'addMeals.html', context)
-	else:
-		meal_form = MealForm(request.POST or None)
-		if meal_form.is_valid():
-			form=meal_form.save(commit=False)
-			form.user=request.user
-			form.save()
-			return redirect('/')
+	meal_form = MealForm()
+	meal_form = MealForm(request.POST or None)
+	if meal_form.is_valid():
+		form=meal_form.save(commit=False)
+		form.user=request.user
+		form.save()
+		return redirect('/')
 	context = {'add_new_meal_form':meal_form}
 	return render(request, 'addMeals.html', context)
 
 @login_required(login_url='log')
-def customer(request, pk_test):
+def customerDetails(request, pk_test):
 	customer = Customer.objects.get(id=pk_test)
 	orders = customer.order_set.all()  # Returns all orders related to customer
 	order_count = orders.count()
@@ -108,27 +104,32 @@ def customer(request, pk_test):
 	context = {'customer':customer, 'view_customer_oders':orders, 'order_count':order_count}
 	return render(request, 'customer.html',context)
 
+
 @login_required(login_url='log')
 def createOrder(request):
 	form = OrderForm()
-	if request.method == 'POST':
-		form = OrderForm(request.POST)
-	
-		if (form.is_valid()):
-			form.save()
+	form = OrderForm(request.POST or None)
+	if (form.is_valid()):
+		new_form=form.save(commit=False)
+		new_form.user=request.user
+		new_form.save()
 		return redirect('/')	
-	context = {'new_form':form}
+	context = {'order_form':form}
 	return render(request, 'order_form.html', context)
+
 
 @login_required(login_url='log')		
 def createCustomer(request):
 	new_form = CustomerForm()
-	if request.method == 'POST':
-		new_form = CustomerForm(request.POST)
-		if new_form.is_valid():
-			new_form.save()
+	new_form = CustomerForm(request.POST or None)
+	if new_form.is_valid():
+		form=new_form.save(commit=False)
+		form.user=request.user
+		form.save()
 		return redirect('/')
-		
+	context = {'customer_form':new_form}
+	return render(request, 'add_customer.html', context)
+
 
 	context = {'customer_form':new_form}
 	return render(request, 'add_customer.html', context)

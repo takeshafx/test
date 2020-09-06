@@ -11,12 +11,12 @@ class OrderForm(ModelForm):
 
 	class Meta:
 		model = Order
-		fields = ['customer', 'meal', 'status'] 
+		fields = ['customer', 'meal', 'status','qty'] 
 
 class CustomerForm(ModelForm):	
 	class Meta:
 		model = Customer
-		fields = "__all__"
+		fields = ['name', 'contact_number', 'Address','email'] 
 
 class MealForm(ModelForm):
 	class Meta:

@@ -42,5 +42,6 @@ class Order(models.Model):
 		customer = models.ForeignKey(Customer, null=True, on_delete= models.SET_NULL)
 		meal = models.ForeignKey(Meal, null=True, on_delete= models.SET_NULL)
 		date_created = models.DateTimeField(auto_now_add=True, null=True)
+		qty=models.IntegerField(null=True)
 		status = models.CharField(max_length=200, null=True, choices=STATUS)
 		user = models.ForeignKey(User,on_delete=models.CASCADE)
