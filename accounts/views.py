@@ -5,7 +5,7 @@ from .models import *
 from .forms import OrderForm
 from .forms import MealForm
 from .forms import CustomerForm,CreateUserForm
-
+from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -85,12 +85,17 @@ def meals(request):
 
 @login_required(login_url='log')
 def addMeal(request):
-	meal_form = MealForm()
-	if request.method == 'POST':
-		meal_form = MealForm(request.POST)
+	if request.method == 'GET':
+		meal_form = MealForm()
+		context = {'add_new_meal_form':meal_form}
+		return render(request, 'addMeals.html', context)
+	else:
+		meal_form = MealForm(request.POST or None)
 		if meal_form.is_valid():
-			meal_form.save()
-		return redirect('/')
+			form=meal_form.save(commit=False)
+			form.user=request.user
+			form.save()
+			return redirect('/')
 	context = {'add_new_meal_form':meal_form}
 	return render(request, 'addMeals.html', context)
 

@@ -21,7 +21,7 @@ class CustomerForm(ModelForm):
 class MealForm(ModelForm):
 	class Meta:
 		model=Meal
-		fields="__all__"
+		fields=['meal_name', 'price', 'description','tags']
 
 class CreateUserForm(UserCreationForm):
 	class Meta:

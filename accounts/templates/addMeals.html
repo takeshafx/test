@@ -9,15 +9,16 @@
 
 			<form action="" method="POST">
 				{% csrf_token %}
-				{{add_new_meal_form}}
+				{{add_new_meal_form.as_p}}
 			
-				<input type="submit" name="Submit">
+				<input type="submit" name="Submit" value="save">
 			</form>
 			
 
 		</div>
 	</div>
 </div>
+
 
 
 {% endblock %}
