@@ -13,6 +13,9 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
+def welcome(request):
+	return render(request, 'welcome_page.html')
+
 def signup(request):
 	if request.user.is_authenticated:
 		return redirect('home')
