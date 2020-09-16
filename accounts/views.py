@@ -94,7 +94,7 @@ def addMeal(request):
 		form=meal_form.save(commit=False)
 		form.user=request.user
 		form.save()
-		return redirect('/')
+		return redirect('/dashboard')
 	context = {'add_new_meal_form':meal_form}
 	return render(request, 'addMeals.html', context)
 
@@ -116,7 +116,7 @@ def createOrder(request):
 		new_form=form.save(commit=False)
 		new_form.user=request.user
 		new_form.save()
-		return redirect('/')	
+		return redirect('/dashboard')	
 	context = {'order_form':form}
 	return render(request, 'order_form.html', context)
 
@@ -129,7 +129,7 @@ def createCustomer(request):
 		form=new_form.save(commit=False)
 		form.user=request.user
 		form.save()
-		return redirect('/')
+		return redirect('/dashboard')
 	context = {'customer_form':new_form}
 	return render(request, 'add_customer.html', context)
 
@@ -147,7 +147,7 @@ def updateOrder(request, pk):
 	 	form = OrderForm(request.POST, instance=order)
 	 	if form.is_valid():
 	 		form.save()
-	 		return redirect('/')
+	 		return redirect('/dashboard')
 
 	context = {'new_form':form}
 	return render(request, 'order_form.html',context)
@@ -157,7 +157,7 @@ def deleteOrder(request, pk):
 	order = Order.objects.get(id=pk)
 	if request.method == "POST":
 		order.delete()
-		return redirect('/')
+		return redirect('/dashboard')
 
 	context = {'item':order}
 	return render(request, 'order_delete.html', context)
